@@ -1,29 +1,16 @@
 
-for (let i = 0; i < 30; i++) {
+function playerObjectMaker() {
+    let playerData;
+    for (let i = 0; i < 30; i++) {
         fetch(`https://www.balldontlie.io/api/v1/players?per_page=100&page=${i}`)
         .then((res) => res.json())
         .then((playerDataObject) => {
-            const playerData = playerDataObject.data;
-            playerObjectMaker(playerData);
-            })
-        }
-
-function playerObjectMaker(playerData) {
-    let playersObject = {};
-    for (let player of playerData) {
-        playersObject.firstName = player.first_name;
-        playersObject.lastName = player.last_name;
-        playersObject.ID = player.id;
-        playersObject.position = player.position;
-        const teamObject = player.team;
-        playersObject.teamAbbrev = teamObject.abbreviation;
-        playersObject.teamCity = teamObject.city;
-        playersObject.teamConference = teamObject.conference;
-        playersObject.teamDivision = teamObject.division;
-        playersObject.teamFullName = teamObject.full_name;
-        playersObject.teamName = teamObject.name;
-        }
-        return playersObject;
+            playerData = playerDataObject.data;
+        })
+    }
+    console.log("inside playerObjectMaker");
+    return playerData;
+   
 }
 
 const playerForm = document.getElementById('player-search-form');
@@ -43,10 +30,20 @@ playerForm.addEventListener('submit', (e) => {
     }
     searchAPIData(userPlayerInput);
     })
-function searchAPIData(playerObject) {
-   for (let player in playerObject) {
-    console.log(player);
-   }
+function searchAPIData(player) {
+    let playerTeamMatch;
+    let playerNameMatch;
+    let playerID;
+    playersObject = playerObjectMaker();
+    for (let player in playersObject) {
+        if (playersObject.teamName === player.team) {
+            playerTeamMatch = player.team;
+            playerID = playersObject.ID;
+            console.log(playerTeamMatch);
+            console.log(playerID);
+        }
+    }
+   
 }
 function displayPlayerInfo(player) {
     const playerInfoHolder = document.getElementById('player-container')
@@ -60,5 +57,4 @@ function displayPlayerInfo(player) {
     const displayPlayerDivision = document.createElement('li');
     displayPlayerName.innerText = player.firstName + player.lastName;
     playerInfoHolder.appendChild(displayPlayerName);
-    
 }
