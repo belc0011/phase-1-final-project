@@ -3,9 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css" />
     <title>Document</title>
 </head>
 <body>
-    <script src="index.js"></script>
+    <h1>Rate your favorite NBA Players!</h1>
+    <h2>Use the dropdowns to pull up player stats</h2>
+    <form id="player-search-form">
+        <label for="team-name">Team Name</label>
+            <select name="team-name" id="team-name">
+                <option value="pacers">Pacers</option>
+                <option value="knicks">Knicks</option>
+                <option value="celtics">Celtics</option>
+                <option value="grizzlies">Grizzlies</option>
+                <option value="raptors">Raptors</option>
+                <option value="thunder">Thunder</option>
+                <option value="pistons">Pistons</option>
+                <option value="clippers">Clippers</option>
+                <option value="warriors">Warriors</option>
+                <option value="76ers">76ers</option>
+                <option value="jazz">Jazz</option>
+                <option value="kings">Kings</option>
+                <option value="cavaliers">Cavaliers</option>
+                <option value="rockets">Rockets</option>
+                <option value="trail-blazers">Trail Blazers</option>
+                <option value="hawks">Hawks</option>
+                <option value="magic">Magic</option>
+                <option value="bucks">Bucks</option>
+                <option value="suns">Suns</option>
+                <option value="timberwolves">Timberwolves</option>
+                <option value="mavericks">Mavericks</option>
+                <option value="nuggets">Nuggets</option>
+                <option value="heat">Heat</option>
+                <option value="wizards">Wizards</option>
+                <option value="nets">Nets</option>
+                <option value="bulls">Bulls</option>
+                <option value="hornets">Hornets</option>
+                <option value="lakers">Lakers</option>
+                <option value="pelicans">Pelicans</option>
+                <option value="spurs">Spurs</option>
+            </select>
+            <input type="submit" id="submit-btn"/>
+    </form>
+    <div id="display-player"></div>
+    <script src="index.js" defer></script>
 </body>
 </html>
