@@ -24,10 +24,11 @@ function playerCardMaker(playerData) {
         }
 }
 
-const submitButton = document.getElementById('submit-btn');
+const playerForm = document.getElementById('player-search-form');
 const dropDown = document.getElementById('team-name');
-submitButton.addEventListener('submit', (e) => {
+playerForm.addEventListener('submit', (e) => {
     e.preventDefault()
+    console.log("click");
     console.log(e);
     const teamSelection = e.value;
     })
