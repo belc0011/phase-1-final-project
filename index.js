@@ -23,16 +23,42 @@ function playerObjectMaker(playerData) {
         playersObject.teamFullName = teamObject.full_name;
         playersObject.teamName = teamObject.name;
         }
-        console.log(playersObject);
+        return playersObject;
 }
 
 const playerForm = document.getElementById('player-search-form');
 const dropDown = document.getElementById('team-name');
 playerForm.addEventListener('submit', (e) => {
     e.preventDefault()
+    const userPlayerInput = {};
     const teamSelected = document.getElementById('team-name').value;
     const lastNameEntered = document.getElementById('player-last-name').value;
-    
+    if (lastNameEntered !== "Optional: Enter player's last name") {
+        userPlayerInput.lastName = lastNameEntered;
+        userPlayerInput.team = teamSelected;
+    }
+    else {
+        userPlayerInput.lastName = "";
+        userPlayerInput.team = teamSelected;
+    }
+    searchAPIData(userPlayerInput);
     })
-const playerDisplay = document.getElementById('display-player');
-
+function searchAPIData(playerObject) {
+   for (let player in playerObject) {
+    console.log(player);
+   }
+}
+function displayPlayerInfo(player) {
+    const playerInfoHolder = document.getElementById('player-container')
+    const playerInfoDisplay = document.getElementById('display-player')
+    const displayPlayerName = document.createElement('h3');
+    const displayPlayerTeamFullName = document.createElement('li');
+    const displayPlayerTeamName = document.createElement('li');
+    const displayPlayerTeamAbbrev = document.createElement('li');
+    const displayPlayerTeamCity = document.createElement('li');
+    const displayPlayerConference = document.createElement('li');
+    const displayPlayerDivision = document.createElement('li');
+    displayPlayerName.innerText = player.firstName + player.lastName;
+    playerInfoHolder.appendChild(displayPlayerName);
+    
+}
