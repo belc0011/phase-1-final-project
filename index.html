@@ -8,10 +8,11 @@
 </head>
 <body>
     <h1>Rate your favorite NBA Players!</h1>
-    <h2>Use the dropdowns to pull up player stats</h2>
+    <h2>Use the inputs below to pull up player stats</h2>
     <form id="player-search-form">
         <label for="team-name">Team Name</label>
             <select name="team-name" id="team-name">
+                <option value="default">Select a team</option>
                 <option value="pacers">Pacers</option>
                 <option value="knicks">Knicks</option>
                 <option value="celtics">Celtics</option>
@@ -43,6 +44,7 @@
                 <option value="pelicans">Pelicans</option>
                 <option value="spurs">Spurs</option>
             </select>
+            <input type="text" id="player-last-name" value="Optional: Enter player's last name">
             <input type="submit" id="submit-btn"/>
     </form>
     <div id="display-player"></div>

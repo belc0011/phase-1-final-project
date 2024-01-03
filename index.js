@@ -4,33 +4,35 @@ for (let i = 0; i < 30; i++) {
         .then((res) => res.json())
         .then((playerDataObject) => {
             const playerData = playerDataObject.data;
-            playerCardMaker(playerData);
+            playerObjectMaker(playerData);
             })
         }
 
-function playerCardMaker(playerData) {
+function playerObjectMaker(playerData) {
+    let playersObject = {};
     for (let player of playerData) {
-        const firstName = player.first_name;
-        const lastName = player.last_name;
-        const playerID = player.id;
-        const playerPosition = player.position;
+        playersObject.firstName = player.first_name;
+        playersObject.lastName = player.last_name;
+        playersObject.ID = player.id;
+        playersObject.position = player.position;
         const teamObject = player.team;
-        const teamAbbrev = teamObject.abbreviation;
-        const teamCity = teamObject.city;
-        const teamConference = teamObject.conference;
-        const teamDivision = teamObject.division;
-        const teamFullName = teamObject.full_name;
-        const teamName = teamObject.name;
+        playersObject.teamAbbrev = teamObject.abbreviation;
+        playersObject.teamCity = teamObject.city;
+        playersObject.teamConference = teamObject.conference;
+        playersObject.teamDivision = teamObject.division;
+        playersObject.teamFullName = teamObject.full_name;
+        playersObject.teamName = teamObject.name;
         }
+        console.log(playersObject);
 }
 
 const playerForm = document.getElementById('player-search-form');
 const dropDown = document.getElementById('team-name');
 playerForm.addEventListener('submit', (e) => {
     e.preventDefault()
-    console.log("click");
-    console.log(e);
-    const teamSelection = e.value;
+    const teamSelected = document.getElementById('team-name').value;
+    const lastNameEntered = document.getElementById('player-last-name').value;
+    
     })
 const playerDisplay = document.getElementById('display-player');
 
