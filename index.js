@@ -22,6 +22,9 @@ for (let i = 0; i < 3; i++) {
                 newCell.innerText = playerFirstName;
                 playerLastName = playerData[i].last_name;
                 newCell2.innerText = playerLastName;
+                newCell2.addEventListener('dblclick', (e) => {
+                    sendPlayerNameToInput(e.target.innerText)
+                })
                 teamName = playerData[i].team.name;
                 newCell3.innerText = teamName;
                 createNewRow.appendChild(newCell);
@@ -57,6 +60,10 @@ playerForm.addEventListener('submit', (e) => {
     searchAPIData(userPlayerInput);
     })
 
+//populates player last name to input field
+function sendPlayerNameToInput(name) {
+    lastNameInput.innerText = name;
+}
 //searches API Data for match & returns match
 function searchAPIData(playerInput) {
     for (let player of playerData) {
@@ -74,11 +81,13 @@ function searchAPIData(playerInput) {
 }
 function displayPlayerInfo(player) {
     const playerInfoHolder = document.getElementById('player-container')
-    const displayPlayerName = document.createElement('h3');
+    const displayPlayerName = document.createElement('a');
     const displayPlayerFullTeamName = document.createElement('li');
     const displayPlayerTeamAbbrev = document.createElement('li');
     const displayPlayerConference = document.createElement('li');
     const displayPlayerDivision = document.createElement('li');
+    displayPlayerName.setAttribute('href', `http://www.google.com/search?q=${player.first_name}+${player.last_name}`);
+    displayPlayerName.setAttribute('title', 'Click to search additional player info');
     displayPlayerName.innerText = player.first_name + " " + player.last_name;
     playerInfoHolder.appendChild(displayPlayerName);
     displayPlayerFullTeamName.innerText = `Team: ${player.team.full_name}`;
