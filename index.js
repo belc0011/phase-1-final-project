@@ -74,12 +74,18 @@ function displayPlayerInfo(player) {
     const playerInfoHolder = document.getElementById('player-container')
     const playerInfoDisplay = document.getElementById('display-player')
     const displayPlayerName = document.createElement('h3');
-    const displayPlayerTeamFullName = document.createElement('li');
-    const displayPlayerTeamName = document.createElement('li');
+    const displayPlayerFullTeamName = document.createElement('li');
     const displayPlayerTeamAbbrev = document.createElement('li');
-    const displayPlayerTeamCity = document.createElement('li');
     const displayPlayerConference = document.createElement('li');
     const displayPlayerDivision = document.createElement('li');
     displayPlayerName.innerText = player.first_name + " " + player.last_name;
     playerInfoHolder.appendChild(displayPlayerName);
+    displayPlayerFullTeamName.innerText = `Team: ${player.team.full_name}`;
+    playerInfoHolder.appendChild(displayPlayerFullTeamName);
+    displayPlayerTeamAbbrev.innerText = `Abbreviation: ${player.team.abbreviation}`;
+    playerInfoHolder.appendChild(displayPlayerTeamAbbrev);
+    displayPlayerConference.innerText = `Conference: ${player.team.conference}`;
+    playerInfoHolder.appendChild(displayPlayerConference);
+    displayPlayerDivision.innerText = `Division: ${player.team.division}`;
+    playerInfoHolder.appendChild(displayPlayerDivision);
 }
