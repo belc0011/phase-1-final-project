@@ -1,19 +1,18 @@
 //Initial Open API GET Request
-let playerData;
-for (let i = 0; i < 3; i++) {
-    fetch(`https://www.balldontlie.io/api/v1/players?per_page=100&page=${i}`)
-    .then((res) => res.json())
-    .then((playerDataObject) => {
-        playerData = playerDataObject.data;
-        const playerTable = document.getElementById('player-table')
-        let tableBody = document.createElement('tbody');
-        playerTable.appendChild(tableBody);
-        let playerFirstName;
-        let playerLastName;
-        let teamName
-        for (let i = 0; i < playerData.length; i++) {
-            let createNewRow = document.createElement('tr');
-            createNewRow.setAttribute('id', `row-${i + 1}`);
+function populateTable() {
+    for (let i = 0; i < 3; i++) {
+        fetch(`https://www.balldontlie.io/api/v1/players?per_page=100&page=${i}`)
+        .then((res) => res.json())
+        .then((playerDataObject) => {
+            let playerData = playerDataObject.data;
+            const playerTable = document.getElementById('player-table')
+            let tableBody = document.createElement('tbody');
+            playerTable.appendChild(tableBody);
+            let playerFirstName;
+            let playerLastName;
+            let teamName
+            for (let i = 0; i < playerData.length; i++) {
+                let createNewRow = document.createElement('tr');
                 let firstNameCell = document.createElement('td')
                 let lastNameCell = document.createElement('td');
                 let teamCell = document.createElement('td');
@@ -23,18 +22,21 @@ for (let i = 0; i < 3; i++) {
                 lastNameCell.innerText = playerLastName;
                 lastNameCell.setAttribute('title', 'double-click to send name to input box')
                 lastNameCell.addEventListener('dblclick', (e) => {
-                    sendPlayerNameToInput(e.target.innerText)
+                sendPlayerNameToInput(e.target.innerText)
                 })
                 teamName = playerData[i].team.name;
                 teamCell.innerText = teamName;
+                createNewRow.setAttribute('id', `row-${playerLastName.toLowerCase()}`);
+                createNewRow.setAttribute('class', `${teamName.toLowerCase()}`)
                 createNewRow.appendChild(firstNameCell);
                 createNewRow.appendChild(lastNameCell);
                 createNewRow.appendChild(teamCell);
                 tableBody.appendChild(createNewRow);
-        }
-    })
+            }
+        })
+    }
 }
-
+populateTable();
 //Make default text disappear on click
 const lastNameInput = document.getElementById('player-last-name');
     lastNameInput.addEventListener('click', (event) => {
@@ -68,17 +70,25 @@ function sendPlayerNameToInput(name) {
 
 //searches API Data for match & returns match
 function searchAPIData(playerInput) {
-    for (let player of playerData) {
-        if (player.team.name.toLowerCase() === playerInput.team) {
-            if (playerInput.lastName !== "" && playerInput.lastName.toLowerCase() === player.last_name.toLowerCase()) {
+    if (playerInput.lastName === "") {
+        const teamMatchesNodeList = document.querySelectorAll(`.${playerInput.team}`);
+        let playerObject = {};
+        teamMatchesNodeList.forEach((player) => {
+            const playerName = player.getAttribute('id').slice(4);
+            playerObject.lastName = playerName;
+            playerObject.team = playerInput.team;
+        })
+    }
+    else if (player.team.name.toLowerCase() === playerInput.team) {
+        if (playerInput.lastName !== "" && playerInput.lastName.toLowerCase () === player.last_name.toLowerCase()) {
+        displayPlayerInfo(player);
+        }
+        else if (playerInput.lastName === "") {
             displayPlayerInfo(player);
-            }
-            else if (playerInput.lastName === "") {
-                displayPlayerInfo(player);
-            }
         }
     }
 }
+
 
 function displayPlayerInfo(player) {
     const playerInfoHolder = document.getElementById('player-container')
