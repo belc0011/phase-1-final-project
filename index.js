@@ -84,8 +84,8 @@ playerForm.addEventListener('submit', (e) => {
         userPlayerInput.last_name = "";
         userPlayerInput.team = teamSelected;
     }
-    const playerObject = searchAPIData(userPlayerInput);
-    displayPlayerInfo(playerObject);
+    const playerArray = searchAPIData(userPlayerInput);
+    displayPlayerInfo(playerArray);
     })
 
 //populates player last name to input field
@@ -96,11 +96,12 @@ function sendPlayerNameToInput(name) {
 
 //searches API Data for match & returns match
 function searchAPIData(playerInput) {
-    let playerObject = {};
     let lastName;
+    let playerMatches = [];
     if (playerInput.last_name === "") {
         let teamMatchesNodeList = document.querySelectorAll(`.${playerInput.team}`);
         teamMatchesNodeList.forEach((player) => {
+            let playerObject = {};
             lastName = player.getAttribute('id').slice(4);
             playerObject.last_name = lastName;
             playerObject.team = playerInput.team;
@@ -109,14 +110,14 @@ function searchAPIData(playerInput) {
             playerObject.team_abbrev = player.cells[4].innerText;
             playerObject.conf = player.cells[5].innerText;
             playerObject.div = player.cells[6].innerText;
-            console.log(teamMatchesNodeList);
-            console.log(playerObject);
+            playerMatches.push(playerObject);
         })
     }
     else {
         teamMatchesNodeList = document.querySelectorAll(`.${playerInput.team}`)
         teamMatchesNodeList.forEach((player) => {
             if (player.getAttribute('id').slice(4) === playerInput.last_name.toLowerCase()) {
+                let playerObject = {};
                 lastName = player.getAttribute('id').slice(4);
                 playerObject.last_name = lastName;
                 playerObject.team = playerInput.team;
@@ -125,31 +126,44 @@ function searchAPIData(playerInput) {
                 playerObject.team_abbrev = player.cells[4].innerText;
                 playerObject.conf = player.cells[5].innerText;
                 playerObject.div = player.cells[6].innerText;
+                playerMatches.push(playerObject);
             }
         })
     }
-    console.log(playerObject);
-    return playerObject;
+    console.log(playerMatches)
+    return playerMatches;
 }
 
-
-function displayPlayerInfo(player) {
-    const playerInfoHolder = document.getElementById('player-container')
-    const displayPlayerName = document.createElement('a');
-    const displayPlayerFullTeamName = document.createElement('li');
-    const displayPlayerTeamAbbrev = document.createElement('li');
-    const displayPlayerConference = document.createElement('li');
-    const displayPlayerDivision = document.createElement('li');
-    displayPlayerName.setAttribute('href', `http://www.google.com/search?q=${player.first_name}+${player.last_name}`);
-    displayPlayerName.setAttribute('title', 'Click to search additional player info');
-    displayPlayerName.innerText = player.first_name + " " + player.last_name;
-    playerInfoHolder.appendChild(displayPlayerName);
-    displayPlayerFullTeamName.innerText = `Team: ${player.team.full_name}`;
-    playerInfoHolder.appendChild(displayPlayerFullTeamName);
-    displayPlayerTeamAbbrev.innerText = `Abbreviation: ${player.team.abbreviation}`;
-    playerInfoHolder.appendChild(displayPlayerTeamAbbrev);
-    displayPlayerConference.innerText = `Conference: ${player.team.conference}`;
-    playerInfoHolder.appendChild(displayPlayerConference);
-    displayPlayerDivision.innerText = `Division: ${player.team.division}`;
-    playerInfoHolder.appendChild(displayPlayerDivision);
+//Called by submit event, passed return value of searchAPI
+function displayPlayerInfo(playerArray) {
+    playerArray.forEach((playerObject) => {
+        const playerInfoHolder = document.getElementById('player-container')
+        const displayPlayerName = document.createElement('a');
+        const displayPlayerFullTeamName = document.createElement('li');
+        const displayPlayerTeamAbbrev = document.createElement('li');
+        const displayPlayerConference = document.createElement('li');
+        const displayPlayerDivision = document.createElement('li');
+        let capitalFirstLetter;
+        let lastName = playerObject.last_name;
+        let team = playerObject.team;
+        const lastNameMinusFirstLetter = lastName.slice(1);
+        const teamMinusFirstLetter = team.slice(1);
+        capitalFirstLetter = lastName.charAt(0).toUpperCase();
+        lastName = capitalFirstLetter + lastNameMinusFirstLetter;
+        capitalFirstLetter = team.charAt(0).toUpperCase();
+        team = capitalFirstLetter + teamMinusFirstLetter;
+        displayPlayerName.setAttribute('href', `http://www.google.com/search?q=${playerObject.first_name}+${lastName}`);
+        displayPlayerName.setAttribute('title', 'Click to search additional player info');
+        displayPlayerName.innerText = playerObject.first_name + " " + lastName;
+        playerInfoHolder.appendChild(displayPlayerName);
+        displayPlayerFullTeamName.innerText = `Team: ${team}`;
+        playerInfoHolder.appendChild(displayPlayerFullTeamName);
+        displayPlayerTeamAbbrev.innerText = `Abbreviation: ${playerObject.team_abbrev}`;
+        playerInfoHolder.appendChild(displayPlayerTeamAbbrev);
+        displayPlayerConference.innerText = `Conference: ${playerObject.conf}`;
+        playerInfoHolder.appendChild(displayPlayerConference);
+        displayPlayerDivision.innerText = `Division: ${playerObject.div}`;
+        playerInfoHolder.appendChild(displayPlayerDivision);
+    })
 }
+//to do tomorrow: fix display function (only displaying the first result when searching by team name)
