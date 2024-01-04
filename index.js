@@ -32,13 +32,20 @@ for (let i = 0; i < 3; i++) {
     })
 }
 
+//Make default text disappear on click
+const lastNameInput = document.getElementById('player-last-name');
+    lastNameInput.addEventListener('click', (event) => {
+            event.target.value = "";
+    })
+
+    //Get user input from form & pass to search function
 const playerForm = document.getElementById('player-search-form');
 const dropDown = document.getElementById('team-name');
 playerForm.addEventListener('submit', (e) => {
     e.preventDefault()
     const userPlayerInput = {};
     const teamSelected = document.getElementById('team-name').value;
-    const lastNameEntered = document.getElementById('player-last-name').value;
+    const lastNameEntered = lastNameInput.value;
     if (lastNameEntered !== "Optional: Enter player's last name") {
         userPlayerInput.lastName = lastNameEntered;
         userPlayerInput.team = teamSelected;
@@ -49,6 +56,8 @@ playerForm.addEventListener('submit', (e) => {
     }
     searchAPIData(userPlayerInput);
     })
+
+//searches API Data for match & returns match
 function searchAPIData(playerInput) {
     let playerInputObject = playerInput
     let playerTeamMatch;
