@@ -59,22 +59,16 @@ playerForm.addEventListener('submit', (e) => {
 
 //searches API Data for match & returns match
 function searchAPIData(playerInput) {
-    let playerInputObject = playerInput
     let playerTeamMatch;
     let playerNameMatch;
     let playerID;
-    if (playerData) {
     for (let player of playerData) {
-        if (player.teamName === playerInput.team) {
-            playerTeamMatch = playerInput.team;
-            playerID = playersObject.ID;
-            console.log(playerTeamMatch);
-            console.log(playerID);
+        if (player.team.name.toLowerCase() === playerInput.team) {
+            displayPlayerInfo(player);
             }
+        else console.log("else");
         }
-    }
-    else (searchAPIData(playerInput))
-   console.log(playerData);
+   
 }
 function displayPlayerInfo(player) {
     const playerInfoHolder = document.getElementById('player-container')
@@ -86,6 +80,6 @@ function displayPlayerInfo(player) {
     const displayPlayerTeamCity = document.createElement('li');
     const displayPlayerConference = document.createElement('li');
     const displayPlayerDivision = document.createElement('li');
-    displayPlayerName.innerText = player.firstName + player.lastName;
+    displayPlayerName.innerText = player.first_name + " " + player.last_name;
     playerInfoHolder.appendChild(displayPlayerName);
 }
