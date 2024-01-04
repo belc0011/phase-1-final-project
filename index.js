@@ -1,9 +1,9 @@
 //Initial Open API GET Request
+let playerData;
 for (let i = 0; i < 3; i++) {
     fetch(`https://www.balldontlie.io/api/v1/players?per_page=100&page=${i}`)
     .then((res) => res.json())
     .then((playerDataObject) => {
-        let playerData;
         playerData = playerDataObject.data;
         const playerTable = document.getElementById('player-table')
         let tableBody = document.createElement('tbody');
@@ -21,6 +21,7 @@ for (let i = 0; i < 3; i++) {
                 firstNameCell.innerText = playerFirstName;
                 playerLastName = playerData[i].last_name;
                 lastNameCell.innerText = playerLastName;
+                lastNameCell.setAttribute('title', 'double-click to send name to input box')
                 lastNameCell.addEventListener('dblclick', (e) => {
                     sendPlayerNameToInput(e.target.innerText)
                 })
@@ -67,22 +68,15 @@ function sendPlayerNameToInput(name) {
 
 //searches API Data for match & returns match
 function searchAPIData(playerInput) {
-    for (let i = 0; i < 3; i++) {
-        fetch(`https://www.balldontlie.io/api/v1/players?per_page=100&page=${i}`)
-        .then((res) => res.json())
-        .then((playerDataObject) => {
-            let playerData = playerDataObject.data;
-            for (let player of playerData) {
-                if (player.team.name.toLowerCase() === playerInput.team) {
-                    if (playerInput.lastName !== "" && playerInput.lastName.toLowerCase() === player.last_name.toLowerCase()) {
-                    displayPlayerInfo(player);
-                    }
-                    else if (playerInput.lastName === "") {
-                        displayPlayerInfo(player);
-                    }
-                }
+    for (let player of playerData) {
+        if (player.team.name.toLowerCase() === playerInput.team) {
+            if (playerInput.lastName !== "" && playerInput.lastName.toLowerCase() === player.last_name.toLowerCase()) {
+            displayPlayerInfo(player);
             }
-        })
+            else if (playerInput.lastName === "") {
+                displayPlayerInfo(player);
+            }
+        }
     }
 }
 
