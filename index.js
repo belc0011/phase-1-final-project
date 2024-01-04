@@ -34,6 +34,7 @@ function populateTable() {
                 createNewRow.appendChild(teamCell);
                 tableBody.appendChild(createNewRow);
             }
+            console.log(playerDataObject);
         })
     }
 }
@@ -112,6 +113,12 @@ function displayPlayerInfo(player) {
     displayPlayerName.setAttribute('title', 'Click to search additional player info');
     displayPlayerName.innerText = player.first_name + " " + player.last_name;
     playerInfoHolder.appendChild(displayPlayerName);
+    switch (player.team) {
+        case ('76ers'): 
+        displayPlayerFullTeamName.innerText = 'Team: Philadelphia 76ers', displayPlayerTeamAbbrev.innerText = 'Abbreviation: PHI', displayPlayerConference.innerText = 'Conference: East', displayPlayerDivision.innerText = 'Division: Atlantic'
+        case ('bucks'): 
+        displayPlayerFullTeamName.innerText = 'Team: Milwaukee Bucks', displayPlayerTeamAbbrev.innerText = 'Abbreviation: PHI', displayPlayerConference.innerText = 'Conference: East', displayPlayerDivision.innerText = 'Division: Atlantic'
+    }
     displayPlayerFullTeamName.innerText = `Team: ${player.team.full_name}`;
     playerInfoHolder.appendChild(displayPlayerFullTeamName);
     displayPlayerTeamAbbrev.innerText = `Abbreviation: ${player.team.abbreviation}`;
