@@ -16,6 +16,10 @@ function populateTable() {
                 let firstNameCell = document.createElement('td')
                 let lastNameCell = document.createElement('td');
                 let teamCell = document.createElement('td');
+                let fullTeamCell = document.createElement('td');
+                let teamAbbrevCell = document.createElement('td');
+                let teamConfCell = document.createElement('td');
+                let teamDivCell = document.createElement('td');
                 playerFirstName = playerData[i].first_name;
                 firstNameCell.innerText = playerFirstName;
                 playerLastName = playerData[i].last_name;
@@ -26,12 +30,19 @@ function populateTable() {
                 })
                 teamName = playerData[i].team.name;
                 teamCell.innerText = teamName;
+                fullTeamCell.innerText = playerData[i].team.full_name;
+                teamAbbrevCell.innerText = playerData[i].team.abbreviation;
+                teamConfCell.innerText = playerData[i].team.conference;
+                teamDivCell.innerText = playerData[i].team.division;
                 createNewRow.setAttribute('id', `row-${playerLastName.toLowerCase()}`);
                 createNewRow.setAttribute('class', `${teamName.toLowerCase()}`)
-                createNewRow.setAttribute('type', `${playerFirstName.toLowerCase()}`)
                 createNewRow.appendChild(firstNameCell);
                 createNewRow.appendChild(lastNameCell);
                 createNewRow.appendChild(teamCell);
+                createNewRow.appendChild(fullTeamCell);
+                createNewRow.appendChild(teamAbbrevCell);
+                createNewRow.appendChild(teamConfCell);
+                createNewRow.appendChild(teamDivCell);
                 tableBody.appendChild(createNewRow);
             }
             console.log(playerDataObject);
@@ -113,12 +124,6 @@ function displayPlayerInfo(player) {
     displayPlayerName.setAttribute('title', 'Click to search additional player info');
     displayPlayerName.innerText = player.first_name + " " + player.last_name;
     playerInfoHolder.appendChild(displayPlayerName);
-    switch (player.team) {
-        case ('76ers'): 
-        displayPlayerFullTeamName.innerText = 'Team: Philadelphia 76ers', displayPlayerTeamAbbrev.innerText = 'Abbreviation: PHI', displayPlayerConference.innerText = 'Conference: East', displayPlayerDivision.innerText = 'Division: Atlantic'
-        case ('bucks'): 
-        displayPlayerFullTeamName.innerText = 'Team: Milwaukee Bucks', displayPlayerTeamAbbrev.innerText = 'Abbreviation: PHI', displayPlayerConference.innerText = 'Conference: East', displayPlayerDivision.innerText = 'Division: Atlantic'
-    }
     displayPlayerFullTeamName.innerText = `Team: ${player.team.full_name}`;
     playerInfoHolder.appendChild(displayPlayerFullTeamName);
     displayPlayerTeamAbbrev.innerText = `Abbreviation: ${player.team.abbreviation}`;
