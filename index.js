@@ -59,7 +59,8 @@ playerForm.addEventListener('submit', (e) => {
         userPlayerInput.lastName = "";
         userPlayerInput.team = teamSelected;
     }
-    searchAPIData(userPlayerInput);
+    const playerObject = searchAPIData(userPlayerInput);
+    
     })
 
 //populates player last name to input field
@@ -70,23 +71,25 @@ function sendPlayerNameToInput(name) {
 
 //searches API Data for match & returns match
 function searchAPIData(playerInput) {
+    let playerObject = {};
     if (playerInput.lastName === "") {
         const teamMatchesNodeList = document.querySelectorAll(`.${playerInput.team}`);
-        let playerObject = {};
         teamMatchesNodeList.forEach((player) => {
-            const playerName = player.getAttribute('id').slice(4);
-            playerObject.lastName = playerName;
+            playerObject.lastName = player.getAttribute('id').slice(4);
             playerObject.team = playerInput.team;
         })
     }
     else if (player.team.name.toLowerCase() === playerInput.team) {
-        if (playerInput.lastName !== "" && playerInput.lastName.toLowerCase () === player.last_name.toLowerCase()) {
-        displayPlayerInfo(player);
-        }
-        else if (playerInput.lastName === "") {
-            displayPlayerInfo(player);
+        if (playerInput.lastName.toLowerCase() === playerInput.last_name.toLowerCase()) {
+        playerObject.lastName = playerInput.last_name;
+        playerObject.team = playerInput.team;
         }
     }
+    else {
+        alert('No data to display');
+    }
+    console.log(playerObject);
+    return playerObject;
 }
 
 
