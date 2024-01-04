@@ -59,9 +59,6 @@ playerForm.addEventListener('submit', (e) => {
 
 //searches API Data for match & returns match
 function searchAPIData(playerInput) {
-    let playerTeamMatch;
-    let playerNameMatch;
-    let playerID;
     for (let player of playerData) {
         if (player.team.name.toLowerCase() === playerInput.team) {
             if (playerInput.lastName !== "" && playerInput.lastName.toLowerCase() === player.last_name.toLowerCase()) {
@@ -77,7 +74,6 @@ function searchAPIData(playerInput) {
 }
 function displayPlayerInfo(player) {
     const playerInfoHolder = document.getElementById('player-container')
-    const playerInfoDisplay = document.getElementById('display-player')
     const displayPlayerName = document.createElement('h3');
     const displayPlayerFullTeamName = document.createElement('li');
     const displayPlayerTeamAbbrev = document.createElement('li');
