@@ -1,16 +1,35 @@
 
-function playerObjectMaker() {
-    let playerData;
-    for (let i = 0; i < 30; i++) {
-        fetch(`https://www.balldontlie.io/api/v1/players?per_page=100&page=${i}`)
-        .then((res) => res.json())
-        .then((playerDataObject) => {
-            playerData = playerDataObject.data;
-        })
-    }
-    console.log("inside playerObjectMaker");
-    return playerData;
-   
+let playerData;
+for (let i = 0; i < 3; i++) {
+    fetch(`https://www.balldontlie.io/api/v1/players?per_page=100&page=${i}`)
+    .then((res) => res.json())
+    .then((playerDataObject) => {
+        playerData = playerDataObject.data;
+        console.log(playerData);
+        const playerTable = document.getElementById('player-table')
+        let tableBody = document.createElement('tbody');
+        playerTable.appendChild(tableBody);
+        let playerFirstName;
+        let playerLastName;
+        let teamName
+        for (let i = 0; i < playerData.length; i++) {
+            let createNewRow = document.createElement('tr');
+            createNewRow.setAttribute('id', `row-${i + 1}`);
+                let newCell = document.createElement('td')
+                let newCell2 = document.createElement('td');
+                let newCell3 = document.createElement('td');
+                playerFirstName = playerData[i].first_name;
+                newCell.innerText = playerFirstName;
+                playerLastName = playerData[i].last_name;
+                newCell2.innerText = playerLastName;
+                teamName = playerData[i].team.name;
+                newCell3.innerText = teamName;
+                createNewRow.appendChild(newCell);
+                createNewRow.appendChild(newCell2);
+                createNewRow.appendChild(newCell3);
+                tableBody.appendChild(createNewRow);
+        }
+    })
 }
 
 const playerForm = document.getElementById('player-search-form');
@@ -30,20 +49,23 @@ playerForm.addEventListener('submit', (e) => {
     }
     searchAPIData(userPlayerInput);
     })
-function searchAPIData(player) {
+function searchAPIData(playerInput) {
+    let playerInputObject = playerInput
     let playerTeamMatch;
     let playerNameMatch;
     let playerID;
-    playersObject = playerObjectMaker();
-    for (let player in playersObject) {
-        if (playersObject.teamName === player.team) {
-            playerTeamMatch = player.team;
+    if (playerData) {
+    for (let player of playerData) {
+        if (player.teamName === playerInput.team) {
+            playerTeamMatch = playerInput.team;
             playerID = playersObject.ID;
             console.log(playerTeamMatch);
             console.log(playerID);
+            }
         }
     }
-   
+    else (searchAPIData(playerInput))
+   console.log(playerData);
 }
 function displayPlayerInfo(player) {
     const playerInfoHolder = document.getElementById('player-container')
