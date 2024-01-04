@@ -36,7 +36,7 @@ function populateTable() {
                 teamCell.innerText = teamName;
                 teamFullName = playerData[i].team.full_name;
                 fullTeamCell.innerText = teamFullName;
-                fullTeamCell.setAttribute('id', `${teamFullName}`);
+                fullTeamCell.setAttribute('id', `${teamFullName.toLowerCase()}`);
                 teamAbbrev = playerData[i].team.abbreviation;
                 teamAbbrevCell.innerText = teamAbbrev;
                 teamAbbrevCell.setAttribute('id', `${teamAbbrev}`);
@@ -97,12 +97,19 @@ function sendPlayerNameToInput(name) {
 //searches API Data for match & returns match
 function searchAPIData(playerInput) {
     let playerObject = {};
+    let lastName;
     if (playerInput.lastName === "") {
         const teamMatchesNodeList = document.querySelectorAll(`.${playerInput.team}`);
         teamMatchesNodeList.forEach((player) => {
-            playerObject.last_name = player.getAttribute('id').slice(4);
+            lastName = player.getAttribute('id').slice(4);
             playerObject.team = playerInput.team;
-            playerObject.first_name = player.getAttribute('type');
+            playerObject.first_name = player.cells[0].innerText;
+            playerObject.team_full_name = player.cells[3].innerText;
+            playerObject.team_abbrev = player.cells[4].innerText;
+            playerObject.conf = player.cells[5].innerText;
+            playerObject.conf = player.cells[6].innerText;
+            console.log(teamMatchesNodeList);
+            console.log(playerObject);
         })
     }
     else if (playerInput.team.toLowerCase() === playerInput.team) {
