@@ -28,6 +28,7 @@ function populateTable() {
                 teamCell.innerText = teamName;
                 createNewRow.setAttribute('id', `row-${playerLastName.toLowerCase()}`);
                 createNewRow.setAttribute('class', `${teamName.toLowerCase()}`)
+                createNewRow.setAttribute('type', `${playerFirstName.toLowerCase()}`)
                 createNewRow.appendChild(firstNameCell);
                 createNewRow.appendChild(lastNameCell);
                 createNewRow.appendChild(teamCell);
@@ -60,7 +61,7 @@ playerForm.addEventListener('submit', (e) => {
         userPlayerInput.team = teamSelected;
     }
     const playerObject = searchAPIData(userPlayerInput);
-    
+    displayPlayerInfo(playerObject);
     })
 
 //populates player last name to input field
@@ -75,14 +76,21 @@ function searchAPIData(playerInput) {
     if (playerInput.lastName === "") {
         const teamMatchesNodeList = document.querySelectorAll(`.${playerInput.team}`);
         teamMatchesNodeList.forEach((player) => {
-            playerObject.lastName = player.getAttribute('id').slice(4);
+            playerObject.last_name = player.getAttribute('id').slice(4);
             playerObject.team = playerInput.team;
+            playerObject.first_name = player.getAttribute('type');
         })
     }
-    else if (player.team.name.toLowerCase() === playerInput.team) {
-        if (playerInput.lastName.toLowerCase() === playerInput.last_name.toLowerCase()) {
-        playerObject.lastName = playerInput.last_name;
-        playerObject.team = playerInput.team;
+    else if (playerInput.team.toLowerCase() === playerInput.team) {
+        if (playerInput.lastName.toLowerCase() === playerInput.lastName.toLowerCase()) {
+            const teamMatchesNodeList = document.querySelectorAll(`.${playerInput.team}`);
+            teamMatchesNodeList.forEach((player) => {
+                if (player.getAttribute('id').slice(4) === playerInput.lastName.toLowerCase()) {
+                    playerObject.last_name = playerInput.lastName.toLowerCase();
+                    playerObject.team = player.team;
+                    playerObject.first_name = player.getAttribute('type');
+                }
+            })
         }
     }
     else {
