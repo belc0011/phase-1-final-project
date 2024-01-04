@@ -47,7 +47,7 @@ playerForm.addEventListener('submit', (e) => {
     const teamSelected = document.getElementById('team-name').value;
     const lastNameEntered = lastNameInput.value;
     if (lastNameEntered !== "Optional: Enter player's last name") {
-        userPlayerInput.lastName = lastNameEntered;
+        userPlayerInput.lastName = lastNameEntered.toLowerCase();
         userPlayerInput.team = teamSelected;
     }
     else {
@@ -64,10 +64,15 @@ function searchAPIData(playerInput) {
     let playerID;
     for (let player of playerData) {
         if (player.team.name.toLowerCase() === playerInput.team) {
+            if (playerInput.lastName !== "" && playerInput.lastName.toLowerCase() === player.last_name.toLowerCase()) {
+            console.log(playerInput.lastName.toLowerCase() + player.last_name.toLowerCase());
             displayPlayerInfo(player);
             }
-        else console.log("else");
+            else if (playerInput.lastName === "") {
+                displayPlayerInfo(player);
+            }
         }
+    }
    
 }
 function displayPlayerInfo(player) {
