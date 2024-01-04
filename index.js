@@ -62,7 +62,7 @@ playerForm.addEventListener('submit', (e) => {
 
 //populates player last name to input field
 function sendPlayerNameToInput(name) {
-    lastNameInput.innerText = name;
+    lastNameInput.setAttribute('value', name);
     console.log("inside send player function")
 }
 //searches API Data for match & returns match
