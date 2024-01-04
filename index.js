@@ -81,7 +81,7 @@ playerForm.addEventListener('submit', (e) => {
         userPlayerInput.team = teamSelected;
     }
     else {
-        userPlayerInput.lastName = "";
+        userPlayerInput.last_name = "";
         userPlayerInput.team = teamSelected;
     }
     const playerObject = searchAPIData(userPlayerInput);
@@ -98,34 +98,35 @@ function sendPlayerNameToInput(name) {
 function searchAPIData(playerInput) {
     let playerObject = {};
     let lastName;
-    if (playerInput.lastName === "") {
-        const teamMatchesNodeList = document.querySelectorAll(`.${playerInput.team}`);
+    if (playerInput.last_name === "") {
+        let teamMatchesNodeList = document.querySelectorAll(`.${playerInput.team}`);
         teamMatchesNodeList.forEach((player) => {
             lastName = player.getAttribute('id').slice(4);
+            playerObject.last_name = lastName;
             playerObject.team = playerInput.team;
             playerObject.first_name = player.cells[0].innerText;
             playerObject.team_full_name = player.cells[3].innerText;
             playerObject.team_abbrev = player.cells[4].innerText;
             playerObject.conf = player.cells[5].innerText;
-            playerObject.conf = player.cells[6].innerText;
+            playerObject.div = player.cells[6].innerText;
             console.log(teamMatchesNodeList);
             console.log(playerObject);
         })
     }
-    else if (playerInput.team.toLowerCase() === playerInput.team) {
-        if (playerInput.lastName.toLowerCase() === playerInput.lastName.toLowerCase()) {
-            const teamMatchesNodeList = document.querySelectorAll(`.${playerInput.team}`);
-            teamMatchesNodeList.forEach((player) => {
-                if (player.getAttribute('id').slice(4) === playerInput.lastName.toLowerCase()) {
-                    playerObject.last_name = playerInput.lastName.toLowerCase();
-                    playerObject.team = player.team;
-                    playerObject.first_name = player.getAttribute('type');
-                }
-            })
-        }
-    }
     else {
-        alert('No data to display');
+        teamMatchesNodeList = document.querySelectorAll(`.${playerInput.team}`)
+        teamMatchesNodeList.forEach((player) => {
+            if (player.getAttribute('id').slice(4) === playerInput.last_name.toLowerCase()) {
+                lastName = player.getAttribute('id').slice(4);
+                playerObject.last_name = lastName;
+                playerObject.team = playerInput.team;
+                playerObject.first_name = player.cells[0].innerText;
+                playerObject.team_full_name = player.cells[3].innerText;
+                playerObject.team_abbrev = player.cells[4].innerText;
+                playerObject.conf = player.cells[5].innerText;
+                playerObject.div = player.cells[6].innerText;
+            }
+        })
     }
     console.log(playerObject);
     return playerObject;
