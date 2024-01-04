@@ -10,7 +10,11 @@ function populateTable() {
             playerTable.appendChild(tableBody);
             let playerFirstName;
             let playerLastName;
-            let teamName
+            let teamName;
+            let teamFullName;
+            let teamAbbrev;
+            let teamConf;
+            let teamDiv;
             for (let i = 0; i < playerData.length; i++) {
                 let createNewRow = document.createElement('tr');
                 let firstNameCell = document.createElement('td')
@@ -30,10 +34,18 @@ function populateTable() {
                 })
                 teamName = playerData[i].team.name;
                 teamCell.innerText = teamName;
-                fullTeamCell.innerText = playerData[i].team.full_name;
-                teamAbbrevCell.innerText = playerData[i].team.abbreviation;
-                teamConfCell.innerText = playerData[i].team.conference;
-                teamDivCell.innerText = playerData[i].team.division;
+                teamFullName = playerData[i].team.full_name;
+                fullTeamCell.innerText = teamFullName;
+                fullTeamCell.setAttribute('id', `${teamFullName}`);
+                teamAbbrev = playerData[i].team.abbreviation;
+                teamAbbrevCell.innerText = teamAbbrev;
+                teamAbbrevCell.setAttribute('id', `${teamAbbrev}`);
+                teamConf = playerData[i].team.conference;
+                teamConfCell.innerText = teamConf;
+                teamConfCell.setAttribute('id', `${teamConf}`);
+                teamDiv = playerData[i].team.division;
+                teamDivCell.innerText = teamDiv;
+                teamDivCell.setAttribute('id', `${teamDiv}`);
                 createNewRow.setAttribute('id', `row-${playerLastName.toLowerCase()}`);
                 createNewRow.setAttribute('class', `${teamName.toLowerCase()}`)
                 createNewRow.appendChild(firstNameCell);
@@ -65,7 +77,7 @@ playerForm.addEventListener('submit', (e) => {
     const teamSelected = document.getElementById('team-name').value;
     const lastNameEntered = lastNameInput.value;
     if (lastNameEntered !== "Optional: Enter player's last name") {
-        userPlayerInput.lastName = lastNameEntered.toLowerCase();
+        userPlayerInput.last_name = lastNameEntered.toLowerCase();
         userPlayerInput.team = teamSelected;
     }
     else {
