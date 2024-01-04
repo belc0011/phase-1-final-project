@@ -1,11 +1,10 @@
-
-let playerData;
+//Initial Open API GET Request
 for (let i = 0; i < 3; i++) {
     fetch(`https://www.balldontlie.io/api/v1/players?per_page=100&page=${i}`)
     .then((res) => res.json())
     .then((playerDataObject) => {
+        let playerData;
         playerData = playerDataObject.data;
-        console.log(playerData);
         const playerTable = document.getElementById('player-table')
         let tableBody = document.createElement('tbody');
         playerTable.appendChild(tableBody);
@@ -41,7 +40,7 @@ const lastNameInput = document.getElementById('player-last-name');
             event.target.value = "";
     })
 
-    //Get user input from form & pass to search function
+//Get user input from form & pass to search function
 const playerForm = document.getElementById('player-search-form');
 const dropDown = document.getElementById('team-name');
 playerForm.addEventListener('submit', (e) => {
@@ -65,21 +64,28 @@ function sendPlayerNameToInput(name) {
     lastNameInput.setAttribute('value', name);
     lastNameInput.innerText = name;
 }
+
 //searches API Data for match & returns match
 function searchAPIData(playerInput) {
-    for (let player of playerData) {
-        if (player.team.name.toLowerCase() === playerInput.team) {
-            if (playerInput.lastName !== "" && playerInput.lastName.toLowerCase() === player.last_name.toLowerCase()) {
-            console.log(playerInput.lastName.toLowerCase() + player.last_name.toLowerCase());
-            displayPlayerInfo(player);
+    for (let i = 0; i < 3; i++) {
+        fetch(`https://www.balldontlie.io/api/v1/players?per_page=100&page=${i}`)
+        .then((res) => res.json())
+        .then((playerDataObject) => {
+            let playerData = playerDataObject.data;
+            for (let player of playerData) {
+                if (player.team.name.toLowerCase() === playerInput.team) {
+                    if (playerInput.lastName !== "" && playerInput.lastName.toLowerCase() === player.last_name.toLowerCase()) {
+                    displayPlayerInfo(player);
+                    }
+                    else if (playerInput.lastName === "") {
+                        displayPlayerInfo(player);
+                    }
+                }
             }
-            else if (playerInput.lastName === "") {
-                displayPlayerInfo(player);
-            }
-        }
+        })
     }
-   
 }
+
 function displayPlayerInfo(player) {
     const playerInfoHolder = document.getElementById('player-container')
     const displayPlayerName = document.createElement('a');
