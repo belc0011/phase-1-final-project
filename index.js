@@ -15,21 +15,21 @@ for (let i = 0; i < 3; i++) {
         for (let i = 0; i < playerData.length; i++) {
             let createNewRow = document.createElement('tr');
             createNewRow.setAttribute('id', `row-${i + 1}`);
-                let newCell = document.createElement('td')
-                let newCell2 = document.createElement('td');
-                let newCell3 = document.createElement('td');
+                let firstNameCell = document.createElement('td')
+                let lastNameCell = document.createElement('td');
+                let teamCell = document.createElement('td');
                 playerFirstName = playerData[i].first_name;
-                newCell.innerText = playerFirstName;
+                firstNameCell.innerText = playerFirstName;
                 playerLastName = playerData[i].last_name;
-                newCell2.innerText = playerLastName;
-                newCell2.addEventListener('dblclick', (e) => {
+                lastNameCell.innerText = playerLastName;
+                lastNameCell.addEventListener('dblclick', (e) => {
                     sendPlayerNameToInput(e.target.innerText)
                 })
                 teamName = playerData[i].team.name;
-                newCell3.innerText = teamName;
-                createNewRow.appendChild(newCell);
-                createNewRow.appendChild(newCell2);
-                createNewRow.appendChild(newCell3);
+                teamCell.innerText = teamName;
+                createNewRow.appendChild(firstNameCell);
+                createNewRow.appendChild(lastNameCell);
+                createNewRow.appendChild(teamCell);
                 tableBody.appendChild(createNewRow);
         }
     })
@@ -63,6 +63,7 @@ playerForm.addEventListener('submit', (e) => {
 //populates player last name to input field
 function sendPlayerNameToInput(name) {
     lastNameInput.innerText = name;
+    console.log("inside send player function")
 }
 //searches API Data for match & returns match
 function searchAPIData(playerInput) {
