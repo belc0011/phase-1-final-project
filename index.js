@@ -1,10 +1,10 @@
-//Initial Open API GET Request
+//Initial Open API GET Request to populate table on page load
 function populateTable() {
-    for (let i = 0; i < 3; i+=2) {
+    for (let i = 0; i < 5; i+=2) {
         fetch(`https://www.balldontlie.io/api/v1/players?per_page=100&page=${i}`)
         .then((res) => res.json())
         .then((playerDataObject) => {
-            let playerData = playerDataObject.data;
+            let playerData = playerDataObject.data; //grab relevant data from response
             const playerTable = document.getElementById('player-table')
             let tableBody = document.createElement('tbody');
             playerTable.appendChild(tableBody);
@@ -30,7 +30,7 @@ function populateTable() {
                 lastNameCell.innerText = playerLastName;
                 lastNameCell.setAttribute('title', 'double-click to send name to input box')
                 lastNameCell.addEventListener('dblclick', (e) => {
-                sendPlayerNameToInput(e.target.innerText)
+                sendNameToInput(e.target.innerText)
                 })
                 teamName = playerData[i].team.name;
                 teamCell.innerText = teamName;
@@ -89,7 +89,7 @@ playerForm.addEventListener('submit', (e) => {
     })
 
 //populates player last name to input field
-function sendPlayerNameToInput(name) {
+function sendNameToInput(name) {
     lastNameInput.setAttribute('value', name);
     lastNameInput.innerText = name;
 }
@@ -98,11 +98,13 @@ function sendPlayerNameToInput(name) {
 function searchAPIData(playerInput) {
     let lastName;
     let playerMatches = [];
+    console.log(playerInput)
     if (playerInput.last_name === "") {
         let teamMatchesNodeList = document.querySelectorAll(`.${playerInput.team}`);
         teamMatchesNodeList.forEach((player) => {
             let playerObject = {};
             lastName = player.getAttribute('id').slice(4);
+            console.log(lastName);
             playerObject.last_name = lastName;
             playerObject.team = playerInput.team;
             playerObject.first_name = player.cells[0].innerText;
@@ -129,6 +131,7 @@ function searchAPIData(playerInput) {
                 playerMatches.push(playerObject);
             }
         })
+        console.log(lastName);
     }
     console.log(playerMatches)
     return playerMatches;
@@ -152,7 +155,7 @@ function displayPlayerInfo(playerArray) {
         lastName = capitalFirstLetter + lastNameMinusFirstLetter;
         capitalFirstLetter = team.charAt(0).toUpperCase();
         team = capitalFirstLetter + teamMinusFirstLetter;
-        displayPlayerName.setAttribute('href', `http://www.google.com/search?q=${playerObject.first_name}+${lastName}`);
+        displayPlayerName.setAttribute('href', `http://www.google.com/search?q=${playerObject.first_name}+${lastName}+basketball`);
         displayPlayerName.setAttribute('title', 'Click to search additional player info');
         displayPlayerName.innerText = playerObject.first_name + " " + lastName;
         playerInfoHolder.appendChild(displayPlayerName);
