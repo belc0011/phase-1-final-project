@@ -8,13 +8,6 @@ function populateTable() {
             const playerTable = document.getElementById('player-table')
             let tableBody = document.createElement('tbody');
             playerTable.appendChild(tableBody);
-            let playerFirstName;
-            let playerLastName;
-            let teamName;
-            let teamFullName;
-            let teamAbbrev;
-            let teamConf;
-            let teamDiv;
             for (let i = 0; i < playerData.length; i++) {
                 let createNewRow = document.createElement('tr');
                 let firstNameCell = document.createElement('td')
@@ -24,26 +17,26 @@ function populateTable() {
                 let teamAbbrevCell = document.createElement('td');
                 let teamConfCell = document.createElement('td');
                 let teamDivCell = document.createElement('td');
-                playerFirstName = playerData[i].first_name;
+                let playerFirstName = playerData[i].first_name;
                 firstNameCell.innerText = playerFirstName;
-                playerLastName = playerData[i].last_name;
+                let playerLastName = playerData[i].last_name;
                 lastNameCell.innerText = playerLastName;
                 lastNameCell.setAttribute('title', 'double-click to send name to input box')
                 lastNameCell.addEventListener('dblclick', (e) => {
                 sendNameToInput(e.target.innerText)
                 })
-                teamName = playerData[i].team.name;
+                let teamName = playerData[i].team.name;
                 teamCell.innerText = teamName;
-                teamFullName = playerData[i].team.full_name;
+                let teamFullName = playerData[i].team.full_name;
                 fullTeamCell.innerText = teamFullName;
                 fullTeamCell.setAttribute('id', `${teamFullName.toLowerCase()}`);
-                teamAbbrev = playerData[i].team.abbreviation;
+                let teamAbbrev = playerData[i].team.abbreviation;
                 teamAbbrevCell.innerText = teamAbbrev;
                 teamAbbrevCell.setAttribute('id', `${teamAbbrev}`);
-                teamConf = playerData[i].team.conference;
+                let teamConf = playerData[i].team.conference;
                 teamConfCell.innerText = teamConf;
                 teamConfCell.setAttribute('id', `${teamConf}`);
-                teamDiv = playerData[i].team.division;
+                let teamDiv = playerData[i].team.division;
                 teamDivCell.innerText = teamDiv;
                 teamDivCell.setAttribute('id', `${teamDiv}`);
                 createNewRow.setAttribute('id', `row-${playerLastName.toLowerCase()}`);
@@ -57,11 +50,11 @@ function populateTable() {
                 createNewRow.appendChild(teamDivCell);
                 tableBody.appendChild(createNewRow);
             }
-            console.log(playerDataObject);
         })
     }
 }
 populateTable();
+
 //Make default text disappear on click
 const lastNameInput = document.getElementById('player-last-name');
     lastNameInput.addEventListener('click', (event) => {
@@ -98,13 +91,11 @@ function sendNameToInput(name) {
 function searchAPIData(playerInput) {
     let lastName;
     let playerMatches = [];
-    console.log(playerInput)
     if (playerInput.last_name === "") {
         let teamMatchesNodeList = document.querySelectorAll(`.${playerInput.team}`);
         teamMatchesNodeList.forEach((player) => {
             let playerObject = {};
             lastName = player.getAttribute('id').slice(4);
-            console.log(lastName);
             playerObject.last_name = lastName;
             playerObject.team = playerInput.team;
             playerObject.first_name = player.cells[0].innerText;
@@ -131,26 +122,24 @@ function searchAPIData(playerInput) {
                 playerMatches.push(playerObject);
             }
         })
-        console.log(lastName);
     }
-    console.log(playerMatches)
     return playerMatches;
 }
 
 //Called by submit event, passed return value of searchAPI
 function displayPlayerInfo(playerArray) {
     playerArray.forEach((playerObject) => {
-        const playerInfoHolder = document.getElementById('player-container')
-        const displayPlayerName = document.createElement('a');
-        const displayPlayerFullTeamName = document.createElement('li');
-        const displayPlayerTeamAbbrev = document.createElement('li');
-        const displayPlayerConference = document.createElement('li');
-        const displayPlayerDivision = document.createElement('li');
+        let playerInfoHolder = document.getElementById('player-container')
+        let displayPlayerName = document.createElement('a');
+        let displayPlayerFullTeamName = document.createElement('li');
+        let displayPlayerTeamAbbrev = document.createElement('li');
+        let displayPlayerConference = document.createElement('li');
+        let displayPlayerDivision = document.createElement('li');
         let capitalFirstLetter;
         let lastName = playerObject.last_name;
         let team = playerObject.team;
-        const lastNameMinusFirstLetter = lastName.slice(1);
-        const teamMinusFirstLetter = team.slice(1);
+        let lastNameMinusFirstLetter = lastName.slice(1);
+        let teamMinusFirstLetter = team.slice(1);
         capitalFirstLetter = lastName.charAt(0).toUpperCase();
         lastName = capitalFirstLetter + lastNameMinusFirstLetter;
         capitalFirstLetter = team.charAt(0).toUpperCase();
