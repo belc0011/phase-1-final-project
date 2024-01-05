@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Get team info on your favorite NBA Players!</h1>
-    <h2>Use the inputs below to filter players by team only, or by team and player name:</h2>
+    <h2>Use the inputs below to filter players by team only, or by team and player name. Once sorted, click on a player's name to search more player info:</h2>
     <form id="player-search-form">
         <label for="team-name">Team Name</label>
             <select name="team-name" id="team-name">
@@ -45,6 +45,7 @@
             </select>
             <input type="text" id="player-last-name" value="Optional: Enter player's last name">
             <input type="submit" id="submit-btn"/>
+            <input type="button" id="clear-btn" value="Clear"/>
     </form>
     <div id="player-container">
     <ul id="display-player"></ul>

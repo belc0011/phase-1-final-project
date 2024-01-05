@@ -1,6 +1,6 @@
 //Initial Open API GET Request
 function populateTable() {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i+=2) {
         fetch(`https://www.balldontlie.io/api/v1/players?per_page=100&page=${i}`)
         .then((res) => res.json())
         .then((playerDataObject) => {
@@ -166,4 +166,8 @@ function displayPlayerInfo(playerArray) {
         playerInfoHolder.appendChild(displayPlayerDivision);
     })
 }
-//to do tomorrow: fix display function (only displaying the first result when searching by team name)
+//clear displayed data
+const clearBtn = document.getElementById('clear-btn');
+clearBtn.addEventListener('click', () => {
+    document.location.reload();
+});
