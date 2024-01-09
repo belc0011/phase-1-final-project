@@ -8,7 +8,7 @@ function populateTable() {
             const playerTable = document.getElementById('player-table')
             let tableBody = document.createElement('tbody');
             playerTable.appendChild(tableBody);
-            for (let i = 0; i < playerData.length; i++) {
+            playerData.forEach((player) => {
                 let createNewRow = document.createElement('tr');
                 let firstNameCell = document.createElement('td')
                 let lastNameCell = document.createElement('td');
@@ -17,26 +17,26 @@ function populateTable() {
                 let teamAbbrevCell = document.createElement('td');
                 let teamConfCell = document.createElement('td');
                 let teamDivCell = document.createElement('td');
-                let playerFirstName = playerData[i].first_name;
+                let playerFirstName = player.first_name;
                 firstNameCell.innerText = playerFirstName;
-                let playerLastName = playerData[i].last_name;
+                let playerLastName = player.last_name;
                 lastNameCell.innerText = playerLastName;
                 lastNameCell.setAttribute('title', 'double-click to send name to input box')
                 lastNameCell.addEventListener('dblclick', (e) => {
                 sendNameToInput(e.target.innerText)
                 })
-                let teamName = playerData[i].team.name;
+                let teamName = player.team.name;
                 teamCell.innerText = teamName;
-                let teamFullName = playerData[i].team.full_name;
+                let teamFullName = player.team.full_name;
                 fullTeamCell.innerText = teamFullName;
                 fullTeamCell.setAttribute('id', `${teamFullName.toLowerCase()}`);
-                let teamAbbrev = playerData[i].team.abbreviation;
+                let teamAbbrev = player.team.abbreviation;
                 teamAbbrevCell.innerText = teamAbbrev;
                 teamAbbrevCell.setAttribute('id', `${teamAbbrev}`);
-                let teamConf = playerData[i].team.conference;
+                let teamConf = player.team.conference;
                 teamConfCell.innerText = teamConf;
                 teamConfCell.setAttribute('id', `${teamConf}`);
-                let teamDiv = playerData[i].team.division;
+                let teamDiv = player.team.division;
                 teamDivCell.innerText = teamDiv;
                 teamDivCell.setAttribute('id', `${teamDiv}`);
                 createNewRow.setAttribute('id', `row-${playerLastName.toLowerCase()}`);
@@ -49,16 +49,15 @@ function populateTable() {
                 createNewRow.appendChild(teamConfCell);
                 createNewRow.appendChild(teamDivCell);
                 tableBody.appendChild(createNewRow);
-            }
+            })
         })
     }
 }
 populateTable();
 
 //Make default text disappear on click
-const lastNameInput = document.getElementById('player-last-name');
-    lastNameInput.addEventListener('click', (event) => {
-            event.target.value = "";
+document.getElementById('player-last-name').addEventListener('click', (event) => {
+        event.target.value = "";
     })
 
 //Get user input from form & pass to search function
@@ -68,7 +67,7 @@ playerForm.addEventListener('submit', (e) => {
     e.preventDefault()
     const userPlayerInput = {};
     const teamSelected = document.getElementById('team-name').value;
-    const lastNameEntered = lastNameInput.value;
+    const lastNameEntered = document.getElementById('player-last-name').value;
     if (lastNameEntered !== "Optional: Enter player's last name") {
         userPlayerInput.last_name = lastNameEntered.toLowerCase();
         userPlayerInput.team = teamSelected;
@@ -83,8 +82,8 @@ playerForm.addEventListener('submit', (e) => {
 
 //populates player last name to input field
 function sendNameToInput(name) {
-    lastNameInput.setAttribute('value', name);
-    lastNameInput.innerText = name;
+    document.getElementById('player-last-name').setAttribute('value', name);
+    document.getElementById('player-last-name').innerText = name;
 }
 
 //searches API Data for match & returns match
